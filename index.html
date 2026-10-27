@@ -131,7 +131,18 @@
     font: 700 15px/1 var(--display); letter-spacing: .06em; text-transform: uppercase;
     border: 1px solid var(--line); background: transparent; color: var(--fg);
     padding: 14px 16px; border-radius: 6px; cursor: pointer; transition: border-color .15s;
+    display: block; text-align: center; text-decoration: none;
   }
+  .ticket {
+    display: inline-flex; align-items: center; gap: 12px; text-decoration: none;
+    background: var(--accent); color: var(--accent-ink); border-radius: 8px; padding: 16px 22px;
+    font: 700 17px/1 var(--display); letter-spacing: .06em; text-transform: uppercase;
+    transition: transform .15s;
+  }
+  .ticket:hover { transform: translateY(-2px); }
+  .ticket:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  .ticket .ico { width: 22px; height: 22px; }
+  .invite { font: 500 14px/1 var(--mono); color: var(--fg); }
   .pick:hover { border-color: var(--accent); }
   .pack.top .pick { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
   .pick:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
@@ -242,7 +253,7 @@
         <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>5 h de live</b> sur ton serveur</span></li>
         <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>3 vidéos par jour</b> sur ton jeu</span></li>
       </ul>
-      <button class="pick" type="button">Choisir ce pack</button>
+      <a class="pick" href="https://discord.gg/nzkrimo" target="_blank" rel="noopener">Choisir ce pack</a>
     </article>
 
     <article class="pack top">
@@ -259,7 +270,7 @@
         <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>10 h de live</b> dans la semaine</span></li>
         <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>4 vidéos par jour</b> sur ton jeu</span></li>
       </ul>
-      <button class="pick" type="button">Choisir ce pack</button>
+      <a class="pick" href="https://discord.gg/nzkrimo" target="_blank" rel="noopener">Choisir ce pack</a>
     </article>
 
     <article class="pack">
@@ -276,7 +287,7 @@
         <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>5 h de live</b> pour chaque streamer</span></li>
         <li><svg aria-hidden="true"><use href="#i-check"/></svg><span>Chacun <b>poste des vidéos</b> sur ton jeu</span></li>
       </ul>
-      <button class="pick" type="button">Choisir ce pack</button>
+      <a class="pick" href="https://discord.gg/nzkrimo" target="_blank" rel="noopener">Choisir ce pack</a>
     </article>
   </section>
 
@@ -284,7 +295,7 @@
     <h2 class="section-title">Comment ça marche</h2>
     <ol class="steps">
       <li><b>Tu choisis ton pack</b><span>Découverte, Boost ou Équipe.</span></li>
-      <li><b>Tu crées un ticket</b><span>Sur mon Discord.</span></li>
+      <li><b>Tu crées un ticket</b><span>Sur mon Discord : discord.gg/nzkrimo</span></li>
       <li><b>On valide ensemble</b><span>Dates des lives, horaires et paiement.</span></li>
       <li><b>Je lance les lives</b><span>Et les vidéos tombent sur ton serveur.</span></li>
     </ol>
@@ -294,8 +305,9 @@
     <svg class="big-ico" aria-hidden="true"><use href="#i-discord"/></svg>
     <div class="order-text">
       <h2 class="section-title">Pour commander</h2>
-      <p>Crée un ticket sur mon Discord.</p>
+      <p>Crée un ticket sur mon Discord : <span class="invite">discord.gg/nzkrimo</span></p>
     </div>
+    <a class="ticket" href="https://discord.gg/nzkrimo" target="_blank" rel="noopener"><svg class="ico" aria-hidden="true"><use href="#i-discord"/></svg>Créer un ticket</a>
   </section>
 
   <footer>Les prix sont fixes. Les dates et horaires des lives se décident ensemble avant le paiement.</footer>
@@ -304,12 +316,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
   const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-  document.querySelectorAll(".pick").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      document.getElementById("demande").scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "center" });
-    });
-  });
 
   // Cartes des packs inclinées en 3D au survol de la souris
   if (!reduce && matchMedia("(hover: hover)").matches) {
