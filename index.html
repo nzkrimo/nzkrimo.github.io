@@ -1,0 +1,435 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>[hidden]{display:none!important}img{max-width:100%}body{margin:0}</style>
+<title>NZ Krimo Collaborations</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600;700&family=Manrope:wght@400;500;700&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+  /* Layout: écran de régie — en-tête avec scène 3D de blocs, chiffres avec logos, 3 packs inclinables en 3D, étapes, commande Discord */
+  :root {
+    --bg: #0d0f19;
+    --panel: #161927;
+    --line: #272b40;
+    --fg: #eceef7;
+    --muted: #9095ae;
+    --accent: #ffcb3d;
+    --accent-ink: #1a1400;
+    --live: #ff4d5e;
+    --display: "Chakra Petch", "Segoe UI", system-ui, sans-serif;
+    --body: "Manrope", "Segoe UI", system-ui, sans-serif;
+    --mono: "JetBrains Mono", ui-monospace, Consolas, monospace;
+    color-scheme: dark;
+  }
+  @media (prefers-color-scheme: light) {
+    :root:not([data-theme="dark"]) {
+      --bg: #f3f4fa; --panel: #ffffff; --line: #dcdfec; --fg: #151827; --muted: #5d627a;
+      --accent: #e0a400; --accent-ink: #1a1400; --live: #e0263a; color-scheme: light;
+    }
+  }
+  :root[data-theme="light"] {
+    --bg: #f3f4fa; --panel: #ffffff; --line: #dcdfec; --fg: #151827; --muted: #5d627a;
+    --accent: #e0a400; --accent-ink: #1a1400; --live: #e0263a; color-scheme: light;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    background: var(--bg); color: var(--fg); font: 16px/1.6 var(--body);
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    padding-block: 32px 64px; overflow-x: hidden;
+  }
+  .wrap { max-width: 1080px; margin: 0 auto; display: grid; gap: 64px; }
+  h1, h2, h3 { font-family: var(--display); line-height: 1.05; text-wrap: balance; margin: 0; }
+  p { margin: 0; }
+  .ico { width: 1em; height: 1em; fill: currentColor; flex: none; }
+
+  /* En-tête */
+  .hero { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); align-items: center; gap: 24px; }
+  .hero-text { display: grid; gap: 20px; position: relative; z-index: 1; }
+  .brand { font: 700 clamp(1.2rem, 3vw, 1.5rem)/1 var(--display); letter-spacing: .08em; text-transform: uppercase; }
+  .brand span { color: var(--accent); }
+  .onair {
+    display: inline-flex; align-items: center; gap: 10px; width: fit-content;
+    font: 500 12px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase;
+    border: 1px solid var(--line); border-radius: 4px; padding: 8px 12px; color: var(--muted);
+  }
+  .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--live); animation: pulse 1.6s infinite; flex: none; }
+  @keyframes pulse { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--live) 60%, transparent); } 100% { box-shadow: 0 0 0 10px transparent; } }
+  .hero h1 { font-size: clamp(2.4rem, 6.4vw, 4.4rem); text-transform: uppercase; letter-spacing: .01em; }
+  .hero h1 em { font-style: normal; color: var(--accent); }
+  .hero p { color: var(--muted); font-size: 1.08rem; max-width: 36rem; }
+  .games { display: flex; flex-wrap: wrap; gap: 10px; }
+  .game {
+    display: inline-flex; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 6px;
+    background: var(--panel); border: 1px solid var(--line); font: 700 15px/1 var(--display); letter-spacing: .06em; text-transform: uppercase;
+  }
+  .game .ico { width: 20px; height: 20px; color: var(--accent); }
+  .stage { position: relative; aspect-ratio: 1 / 1; max-width: 100%; }
+  .stage canvas { position: absolute; inset: 0; width: 100% !important; height: 100% !important; display: block; }
+  .stage::after {
+    content: ""; position: absolute; inset: 18%; border-radius: 50%; z-index: -1;
+    background: radial-gradient(circle, color-mix(in srgb, var(--accent) 22%, transparent), transparent 70%);
+  }
+
+  /* Chiffres */
+  .stats { display: grid; gap: 16px; }
+  .stats-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 8px 24px; }
+  .section-title { font-size: clamp(1.6rem, 3.4vw, 2.1rem); text-transform: uppercase; }
+  .handle { display: inline-flex; align-items: center; gap: 8px; font: 500 13px/1.4 var(--mono); color: var(--muted); }
+  .handle b { color: var(--fg); font-weight: 500; }
+  .big { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+  .stat {
+    background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 22px;
+    display: grid; gap: 8px; position: relative; overflow: hidden;
+  }
+  .stat.main { border-color: var(--accent); }
+  .stat-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .stat-label { display: inline-flex; align-items: center; gap: 8px; font: 500 12px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+  .stat-logo { width: 28px; height: 28px; color: var(--fg); opacity: .9; }
+  .stat-value { font: 700 clamp(2.4rem, 5vw, 3.4rem)/1 var(--display); font-variant-numeric: tabular-nums; }
+  .stat.main .stat-value { color: var(--accent); }
+  .stat-sub { font: 500 13px/1.3 var(--mono); color: var(--muted); }
+  .stat .watermark { position: absolute; right: -18px; bottom: -22px; width: 120px; height: 120px; color: var(--fg); opacity: .05; pointer-events: none; }
+  .stats-note { color: var(--muted); font-size: .85rem; }
+
+  /* Packs */
+  .packs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; align-items: stretch; perspective: 1000px; }
+  .pack {
+    background: var(--panel); border: 1px solid var(--line); border-radius: 10px;
+    padding: 24px; display: grid; grid-template-rows: auto auto 1fr auto; gap: 20px; position: relative;
+    transform-style: preserve-3d; transition: transform .25s ease, box-shadow .25s ease;
+    --rx: 0deg; --ry: 0deg; transform: rotateX(var(--rx)) rotateY(var(--ry));
+  }
+  .pack.tilting { transition: none; box-shadow: 0 24px 48px -24px color-mix(in srgb, var(--accent) 45%, transparent); }
+  .pack > * { transform: translateZ(24px); }
+  .pack.top { border-color: var(--accent); }
+  .tag {
+    position: absolute; top: -11px; left: 24px; background: var(--accent); color: var(--accent-ink);
+    font: 700 11px/1 var(--display); letter-spacing: .1em; text-transform: uppercase; padding: 6px 10px; border-radius: 3px;
+  }
+  .pack-head { display: grid; gap: 4px; }
+  .pack-name { display: flex; align-items: center; gap: 8px; font: 700 13px/1 var(--display); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+  .pack-name .ico { width: 16px; height: 16px; color: var(--accent); }
+  .price { font: 700 3rem/1 var(--display); font-variant-numeric: tabular-nums; }
+  .price small { font-size: 1.1rem; color: var(--muted); margin-left: 4px; }
+  .meter { display: grid; gap: 8px; }
+  .meter-label { display: flex; justify-content: space-between; font: 500 12px/1 var(--mono); color: var(--muted); letter-spacing: .04em; }
+  .meter-label b { color: var(--fg); font-weight: 500; }
+  .ticks { display: grid; grid-template-columns: repeat(10, 1fr); gap: 3px; }
+  .ticks i { height: 14px; border-radius: 2px; background: var(--line); }
+  .ticks i.on { background: var(--live); }
+  .ticks.team i.on { background: repeating-linear-gradient(90deg, var(--live) 0 6px, color-mix(in srgb, var(--live) 55%, var(--panel)) 6px 12px); }
+  .feat { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; align-content: start; }
+  .feat li { display: grid; grid-template-columns: 22px 1fr; gap: 10px; align-items: start; }
+  .feat svg { width: 18px; height: 18px; margin-top: 3px; color: var(--accent); }
+  .pick {
+    font: 700 15px/1 var(--display); letter-spacing: .06em; text-transform: uppercase;
+    border: 1px solid var(--line); background: transparent; color: var(--fg);
+    padding: 14px 16px; border-radius: 6px; cursor: pointer; transition: border-color .15s;
+  }
+  .pick:hover { border-color: var(--accent); }
+  .pack.top .pick { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+  .pick:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  /* Étapes */
+  .steps-wrap { display: grid; gap: 20px; }
+  .steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; counter-reset: s; }
+  .steps li { counter-increment: s; display: grid; gap: 6px; align-content: start; border-top: 2px solid var(--line); padding-top: 14px; }
+  .steps li::before { content: "0" counter(s); font: 500 12px/1 var(--mono); color: var(--accent); letter-spacing: .1em; }
+  .steps b { font-family: var(--display); font-size: 1.05rem; }
+  .steps span { color: var(--muted); font-size: .95rem; }
+
+  /* Commande */
+  .order {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 20px 28px;
+    background: var(--panel); border: 1px solid var(--accent); border-radius: 10px; padding: 28px;
+  }
+  .order .big-ico { width: 56px; height: 56px; color: var(--accent); }
+  .order-text { display: grid; gap: 6px; flex: 1 1 260px; min-width: 0; }
+  .order-text p { color: var(--muted); font-size: 1.1rem; }
+
+  footer { color: var(--muted); font-size: .9rem; border-top: 1px solid var(--line); padding-top: 20px; }
+
+  @media (max-width: 880px) {
+    .hero { grid-template-columns: minmax(0, 1fr); }
+    .stage { width: min(100%, 420px); justify-self: center; order: -1; margin-bottom: -40px; }
+    .packs { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+    .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (max-width: 640px) { .big { grid-template-columns: minmax(0, 1fr); } .order { padding: 20px; } }
+  @media (max-width: 460px) { .steps { grid-template-columns: minmax(0, 1fr); } }
+  @media (prefers-reduced-motion: reduce) { .dot { animation: none; } .pack { transition: none; } }
+</style>
+
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-tiktok" viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></symbol>
+  <symbol id="i-discord" viewBox="0 0 24 24"><path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/></symbol>
+  <symbol id="i-fivem" viewBox="0 0 24 24"><path d="M22.4 24h-5.225c-.117 0-.455-1.127-1.026-3.375-1.982-6.909-3.124-10.946-3.417-12.12l3.37-3.325h.099c.454 1.42 2.554 7.676 6.299 18.768ZM12.342 7.084h-.048a3.382 3.385 0 0 1-.098-.492v-.098a102.619 102.715 0 0 1 3.272-3.275c.13.196.196.356.196.491v.05a140.694 140.826 0 0 1-3.322 3.324ZM5.994 10.9h-.05c.67-2.12 1.076-3.209 1.223-3.275L14.492.343c.08 0 .258.524.533 1.562zm1.37-4.014h-.05C8.813 2.342 9.612.048 9.71 0h4.495v.05a664.971 664.971 0 0 1-6.841 6.839Zm-2.69 7.874h-.05c.166-.798.554-1.418 1.174-1.855a312.918 313.213 0 0 1 5.71-5.717h.05c-.117.672-.375 1.175-.781 1.52zM1.598 24l-.098-.05c1.399-4.172 2.148-6.322 2.248-6.45l6.74-6.694v.05C10.232 11.88 8.974 16.263 6.73 24Z"/></symbol>
+  <symbol id="i-roblox" viewBox="0 0 24 24"><path d="M18.926 23.998 0 18.892 5.075.002 24 5.108ZM15.348 10.09l-5.282-1.453-1.414 5.273 5.282 1.453z"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12l5 5L19 7" fill="none" stroke="currentColor" stroke-width="2.5"/></symbol>
+</svg>
+
+<div class="wrap">
+  <header class="hero">
+    <div class="hero-text">
+      <span class="brand">NZ Krimo <span>Collaborations</span></span>
+      <span class="onair"><span class="dot" aria-hidden="true"></span>Lives &amp; vidéos sponsorisés</span>
+      <h1>Augmente ton serveur <em>FiveM</em> &amp; <em>Roblox</em></h1>
+      <p>Près d'1 million de vues sur mes vidéos en 28 jours. Je stream sur ton serveur et je poste des vidéos dessus pour ramener des joueurs. Choisis ton pack et crée un ticket sur mon Discord.</p>
+      <div class="games">
+        <span class="game"><svg class="ico" aria-hidden="true"><use href="#i-fivem"/></svg>FiveM</span>
+        <span class="game"><svg class="ico" aria-hidden="true"><use href="#i-roblox"/></svg>Roblox</span>
+      </div>
+    </div>
+    <div class="stage" id="stage" aria-hidden="true"></div>
+  </header>
+
+  <section class="stats" aria-label="Mon audience">
+    <div class="stats-head">
+      <h2 class="section-title">Mon audience</h2>
+      <span class="handle"><svg class="ico" aria-hidden="true"><use href="#i-tiktok"/></svg><b>@nzkrimolecrackito</b></span>
+    </div>
+    <div class="big">
+      <div class="stat main">
+        <div class="stat-top">
+          <span class="stat-label">Vues TikTok</span>
+          <svg class="stat-logo" aria-hidden="true"><use href="#i-tiktok"/></svg>
+        </div>
+        <span class="stat-value" data-count="970" data-suffix=" K">970 K</span>
+        <span class="stat-sub">en seulement 28 jours</span>
+        <svg class="watermark" aria-hidden="true"><use href="#i-tiktok"/></svg>
+      </div>
+      <div class="stat">
+        <div class="stat-top">
+          <span class="stat-label"><span class="dot" aria-hidden="true"></span>Vues en live</span>
+          <svg class="stat-logo" aria-hidden="true"><use href="#i-tiktok"/></svg>
+        </div>
+        <span class="stat-value" data-count="45.5" data-suffix=" K">45,5 K</span>
+        <span class="stat-sub">en seulement 7 jours</span>
+        <svg class="watermark" aria-hidden="true"><use href="#i-tiktok"/></svg>
+      </div>
+      <div class="stat">
+        <div class="stat-top">
+          <span class="stat-label">Discord</span>
+          <svg class="stat-logo" aria-hidden="true"><use href="#i-discord"/></svg>
+        </div>
+        <span class="stat-value" data-count="6000" data-suffix="">6 000</span>
+        <span class="stat-sub">membres</span>
+        <svg class="watermark" aria-hidden="true"><use href="#i-discord"/></svg>
+      </div>
+    </div>
+    <p class="stats-note">Chiffres TikTok de fin octobre 2026.</p>
+  </section>
+
+  <section class="packs" aria-label="Les packs">
+    <article class="pack">
+      <div class="pack-head">
+        <span class="pack-name">Pack Découverte</span>
+        <span class="price">100<small>€</small></span>
+      </div>
+      <div class="meter">
+        <div class="meter-label"><span>Live</span><b>5 h</b></div>
+        <div class="ticks" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i><i></i></div>
+      </div>
+      <ul class="feat">
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>5 h de live</b> sur ton serveur</span></li>
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>3 vidéos par jour</b> sur ton jeu</span></li>
+      </ul>
+      <button class="pick" type="button">Choisir ce pack</button>
+    </article>
+
+    <article class="pack top">
+      <span class="tag">Recommandé</span>
+      <div class="pack-head">
+        <span class="pack-name">Pack Boost</span>
+        <span class="price">250<small>€</small></span>
+      </div>
+      <div class="meter">
+        <div class="meter-label"><span>Live dans la semaine</span><b>10 h</b></div>
+        <div class="ticks" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></div>
+      </div>
+      <ul class="feat">
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>10 h de live</b> dans la semaine</span></li>
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>4 vidéos par jour</b> sur ton jeu</span></li>
+      </ul>
+      <button class="pick" type="button">Choisir ce pack</button>
+    </article>
+
+    <article class="pack">
+      <div class="pack-head">
+        <span class="pack-name"><svg class="ico" aria-hidden="true"><use href="#i-fivem"/></svg>Pack Équipe</span>
+        <span class="price">500<small>€</small></span>
+      </div>
+      <div class="meter">
+        <div class="meter-label"><span>Live par streamer</span><b>5 h chacun</b></div>
+        <div class="ticks team" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></div>
+      </div>
+      <ul class="feat">
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg><span>Une <b>équipe de streamers FiveM</b> sur ton serveur</span></li>
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>5 h de live</b> pour chaque streamer</span></li>
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg><span>Chacun <b>poste des vidéos</b> sur ton jeu</span></li>
+      </ul>
+      <button class="pick" type="button">Choisir ce pack</button>
+    </article>
+  </section>
+
+  <section class="steps-wrap">
+    <h2 class="section-title">Comment ça marche</h2>
+    <ol class="steps">
+      <li><b>Tu choisis ton pack</b><span>Découverte, Boost ou Équipe.</span></li>
+      <li><b>Tu crées un ticket</b><span>Sur mon Discord.</span></li>
+      <li><b>On valide ensemble</b><span>Dates des lives, horaires et paiement.</span></li>
+      <li><b>Je lance les lives</b><span>Et les vidéos tombent sur ton serveur.</span></li>
+    </ol>
+  </section>
+
+  <section class="order" id="demande">
+    <svg class="big-ico" aria-hidden="true"><use href="#i-discord"/></svg>
+    <div class="order-text">
+      <h2 class="section-title">Pour commander</h2>
+      <p>Crée un ticket sur mon Discord.</p>
+    </div>
+  </section>
+
+  <footer>Les prix sont fixes. Les dates et horaires des lives se décident ensemble avant le paiement.</footer>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  document.querySelectorAll(".pick").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      document.getElementById("demande").scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "center" });
+    });
+  });
+
+  // Cartes des packs inclinées en 3D au survol de la souris
+  if (!reduce && matchMedia("(hover: hover)").matches) {
+    document.querySelectorAll(".pack").forEach((card) => {
+      card.addEventListener("pointermove", (e) => {
+        const r = card.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width - 0.5, y = (e.clientY - r.top) / r.height - 0.5;
+        card.classList.add("tilting");
+        card.style.setProperty("--ry", (x * 14).toFixed(2) + "deg");
+        card.style.setProperty("--rx", (-y * 14).toFixed(2) + "deg");
+      });
+      card.addEventListener("pointerleave", () => {
+        card.classList.remove("tilting");
+        card.style.setProperty("--ry", "0deg");
+        card.style.setProperty("--rx", "0deg");
+      });
+    });
+  }
+
+  // Compteurs qui montent quand les chiffres arrivent à l'écran
+  const fmt = (v, target) => target % 1 ? v.toFixed(1).replace(".", ",") : Math.round(v).toLocaleString("fr-FR").replace(/ | /g, " ");
+  if (!reduce && "IntersectionObserver" in window) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((en) => {
+        if (!en.isIntersecting) return;
+        io.unobserve(en.target);
+        const el = en.target, target = parseFloat(el.dataset.count), suf = el.dataset.suffix, t0 = performance.now();
+        const step = (t) => {
+          const k = Math.min(1, (t - t0) / 1400), ease = 1 - Math.pow(1 - k, 3);
+          el.textContent = fmt(target * ease, target) + suf;
+          if (k < 1) requestAnimationFrame(step);
+        };
+        requestAnimationFrame(step);
+      });
+    }, { threshold: 0.6 });
+    document.querySelectorAll("[data-count]").forEach((el) => io.observe(el));
+  }
+
+  // Scène 3D : blocs qui flottent autour d'un écran "LIVE"
+  (function () {
+    const stage = document.getElementById("stage");
+    if (!window.THREE || !stage) return;
+    const css = getComputedStyle(document.documentElement);
+    const col = (n) => new THREE.Color(css.getPropertyValue(n).trim() || "#ffffff");
+    let renderer;
+    try { renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true }); } catch (e) { return; }
+    renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+    stage.appendChild(renderer.domElement);
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(40, 1, 0.1, 100);
+    camera.position.set(0, 0, 13);
+    scene.add(new THREE.AmbientLight(0xffffff, 0.55));
+    const key = new THREE.DirectionalLight(0xffffff, 0.9); key.position.set(4, 6, 8); scene.add(key);
+    const glow = new THREE.PointLight(col("--accent"), 1.4, 30); glow.position.set(-3, -2, 5); scene.add(glow);
+
+    const world = new THREE.Group(); scene.add(world);
+
+    // Écran central avec le mot LIVE
+    const cv = document.createElement("canvas"); cv.width = 512; cv.height = 320;
+    const g = cv.getContext("2d");
+    g.fillStyle = "#0d0f19"; g.fillRect(0, 0, 512, 320);
+    g.strokeStyle = css.getPropertyValue("--accent").trim(); g.lineWidth = 10; g.strokeRect(5, 5, 502, 310);
+    g.fillStyle = css.getPropertyValue("--live").trim(); g.beginPath(); g.arc(130, 160, 30, 0, Math.PI * 2); g.fill();
+    g.fillStyle = "#ffffff"; g.font = "700 120px 'Chakra Petch', sans-serif"; g.textBaseline = "middle"; g.fillText("LIVE", 185, 166);
+    const tex = new THREE.CanvasTexture(cv);
+    const screen = new THREE.Mesh(
+      new THREE.BoxGeometry(4.4, 2.75, 0.3),
+      [0, 1, 2, 3].map(() => new THREE.MeshStandardMaterial({ color: 0x161927, roughness: 0.5 }))
+        .concat([new THREE.MeshBasicMaterial({ map: tex }), new THREE.MeshStandardMaterial({ color: 0x161927 })])
+    );
+    world.add(screen);
+
+    // Blocs autour
+    const palette = [col("--accent"), col("--live"), new THREE.Color(0x2a2f4a), new THREE.Color(0xeceef7)];
+    const cubes = [];
+    for (let i = 0; i < 16; i++) {
+      const s = 0.35 + Math.random() * 0.75;
+      const geo = new THREE.BoxGeometry(s, s, s);
+      const mesh = new THREE.Mesh(geo, new THREE.MeshStandardMaterial({ color: palette[i % palette.length], roughness: 0.35, metalness: 0.15 }));
+      const edges = new THREE.LineSegments(new THREE.EdgesGeometry(geo), new THREE.LineBasicMaterial({ color: 0x000000, transparent: true, opacity: 0.25 }));
+      mesh.add(edges);
+      const a = (i / 16) * Math.PI * 2, r = 3.4 + Math.random() * 1.6;
+      mesh.position.set(Math.cos(a) * r, (Math.random() - 0.5) * 5, Math.sin(a) * r * 0.6 - 0.5);
+      mesh.rotation.set(Math.random() * 3, Math.random() * 3, 0);
+      mesh.userData = { y: mesh.position.y, sp: 0.4 + Math.random() * 0.8, ph: Math.random() * 6 };
+      world.add(mesh); cubes.push(mesh);
+    }
+
+    function size() {
+      const w = stage.clientWidth, h = stage.clientHeight;
+      renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix();
+    }
+    size(); addEventListener("resize", size);
+
+    let mx = 0, my = 0;
+    addEventListener("pointermove", (e) => { mx = e.clientX / innerWidth - 0.5; my = e.clientY / innerHeight - 0.5; });
+
+    function frame(t) {
+      const s = t / 1000;
+      world.rotation.y += ((mx * 0.6 + Math.sin(s * 0.3) * 0.25) - world.rotation.y) * 0.05;
+      world.rotation.x += ((my * 0.4) - world.rotation.x) * 0.05;
+      screen.position.y = Math.sin(s * 1.2) * 0.12;
+      cubes.forEach((c) => {
+        const u = c.userData;
+        c.position.y = u.y + Math.sin(s * u.sp + u.ph) * 0.3;
+        c.rotation.x += 0.004 * u.sp; c.rotation.y += 0.006 * u.sp;
+      });
+      renderer.render(scene, camera);
+      if (!reduce) requestAnimationFrame(frame);
+    }
+    (document.fonts ? document.fonts.ready : Promise.resolve()).then(() => {
+      g.fillStyle = "#0d0f19"; g.fillRect(14, 14, 484, 292);
+      g.fillStyle = css.getPropertyValue("--live").trim(); g.beginPath(); g.arc(130, 160, 30, 0, Math.PI * 2); g.fill();
+      g.fillStyle = "#ffffff"; g.font = "700 120px 'Chakra Petch', sans-serif"; g.fillText("LIVE", 185, 166);
+      tex.needsUpdate = true;
+    });
+    requestAnimationFrame(frame);
+  })();
+</script>
+
+</body>
+</html>
